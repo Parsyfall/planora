@@ -22,5 +22,14 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  adminer:
+    image: adminer
+    container_name: planora-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
 volumes:
   mysql_data:
