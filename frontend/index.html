@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planora Auth</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="auth-card">
+        <div class="badge">Planora</div>
+        <h1 id="title">Autentificare</h1>
+        <p class="subtitle">Interfață unificată pentru login și înregistrare.</p>
+
+        <div class="mode-switch">
+          <button id="loginMode" class="mode-button active" type="button">Log in</button>
+          <button id="signupMode" class="mode-button" type="button">Sign up</button>
+        </div>
+
+        <form id="authForm" class="form">
+          <div id="nameRow" class="row hidden">
+            <label>
+              <span>Prenume</span>
+              <input id="firstName" name="firstName" type="text" autocomplete="given-name" />
+            </label>
+            <label>
+              <span>Nume</span>
+              <input id="lastName" name="lastName" type="text" autocomplete="family-name" />
+            </label>
+          </div>
+
+          <label>
+            <span>Email</span>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label id="phoneField" class="hidden">
+            <span>Telefon</span>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </label>
+
+          <label id="roleField" class="hidden">
+            <span>Rol</span>
+            <select id="role" name="role">
+              <option value="USER">Invitat</option>
+              <option value="ORGANIZER">Organizator</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Parolă</span>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </label>
+
+          <button id="submitButton" class="submit" type="submit">Conectează-te</button>
+        </form>
+
+        <div id="status" class="status" aria-live="polite"></div>
+
+        <section class="result-panel">
+          <h2>Răspuns API</h2>
+          <pre id="result">Aici va apărea răspunsul backend-ului.</pre>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
