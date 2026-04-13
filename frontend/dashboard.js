@@ -75,7 +75,7 @@ async function loadUser() {
 
 async function loadEvents() {
     try {
-        const res = await fetch(`${API}/events`, { headers });
+        const res = await fetch(`${API}/events/mine/list`, { headers });
         const data = await res.json();
 
         eventsListEl.innerHTML = "";
@@ -87,13 +87,25 @@ async function loadEvents() {
 
         data.forEach(event => {
             const li = document.createElement("li");
-            li.textContent = `${event.title} — ${event.date}`;
+            li.innerHTML = renderEvent(event)
             eventsListEl.appendChild(li);
         });
     } catch (err) {
         eventsListEl.innerHTML = "<li>Error loading events</li>";
     }
 }
+
+function renderEvent(event) {
+    return `
+        <div class="event-card">
+        <h3>${event.title}</h3>
+        <p>${event.description || ""}</p>
+        <p>${event.location || ""}</p>
+        <p>${event.event_date} ${event.event_time}</p>
+        </div>
+    `;
+}
+
 
 async function init() {
     const user = await requireAuth();
