@@ -94,6 +94,8 @@ async function submitAuth(event) {
     }
 
     setStatus(state.mode === 'signup' ? 'Cont creat cu succes.' : 'Autentificare reușită.', 'success');
+
+    setTimeout(() => window.location.href = "/dashboard.html", 1500)
   } catch (error) {
     elements.result.textContent = JSON.stringify({ error: error.message }, null, 2);
     setStatus('Backend-ul nu răspunde sau CORS nu permite cererea.', 'error');

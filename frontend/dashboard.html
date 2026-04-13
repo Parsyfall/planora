@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planora Dashboard</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./dashboard.css" />
+
+</head>
+<body>
+  <main class="page">
+    <section class="dashboard-card">
+      <header class="dashboard-header">
+        <h1>Dashboard</h1>
+        <button id="logoutBtn">Logout</button>
+      </header>
+
+      <section class="user-info">
+        <h2>Profil</h2>
+        <pre id="userData">Loading...</pre>
+      </section>
+
+      <section class="events">
+        <div class="events-header">
+          <h2>Evenimentele mele</h2>
+          <button id="createEventBtn">+ Creează eveniment</button>
+        </div>
+
+        <ul id="eventsList">
+          <li>Loading events...</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="./dashboard.js"></script>
+</body>
+</html>
