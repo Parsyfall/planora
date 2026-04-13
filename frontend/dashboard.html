@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planora Dashboard</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./dashboard.css" />
+
+</head>
+
+<body>
+  <main class="page">
+    <section class="dashboard-card">
+      <header class="dashboard-header">
+        <h1>Dashboard</h1>
+        <button id="logoutBtn">Logout</button>
+      </header>
+
+      <section class="user-info">
+        <h2>Profil</h2>
+        <pre id="userData">Loading...</pre>
+      </section>
+
+      <section class="events">
+        <div class="events-header">
+          <h2>Evenimentele mele</h2>
+          <button id="createEventBtn">+ Creează eveniment</button>
+        </div>
+
+        <ul id="eventsList">
+          <li>Loading events...</li>
+        </ul>
+      </section>
+
+      <section id="eventFormContainer" class="hidden">
+        <h3>Creează eveniment</h3>
+
+        <form id="eventForm">
+          <label>
+            <span>Titlu</span>
+            <input name="title" required />
+          </label>
+
+          <label>
+            <span>Descriere</span>
+            <textarea name="description"></textarea>
+          </label>
+
+          <label>
+            <span>Locație</span>
+            <input name="location" />
+          </label>
+
+          <label>
+            <span>Data</span>
+            <input name="eventDate" type="date" required />
+          </label>
+
+          <label>
+            <span>Ora</span>
+            <input name="eventTime" type="time" required />
+          </label>
+
+          <label>
+            <span>Public</span>
+            <input name="isPublic" type="checkbox" />
+          </label>
+
+          <label>
+            <span>Imagine invitație (URL)</span>
+            <input name="invitation_media_url" type="url" />
+          </label>
+
+          <button type="submit">Salvează</button>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="./dashboard.js"></script>
+</body>
+
+</html>
