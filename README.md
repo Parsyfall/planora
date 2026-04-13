@@ -18,7 +18,14 @@ git clone git@github.com:Parsyfall/planora.git
 cd planora
 ```
 
-## 2. Start application with Docker
+## 2. Configure environment variables
+
+Create your local .env file:
+```bash
+cp .env.example .env
+```
+
+## 3. Start application with Docker
 ```bash
 docker compose up --build
 ```
