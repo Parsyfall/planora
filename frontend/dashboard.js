@@ -15,10 +15,52 @@ const headers = {
 const userDataEl = document.getElementById("userData");
 const eventsListEl = document.getElementById("eventsList");
 const logoutBtn = document.getElementById("logoutBtn");
+const createBtn = document.getElementById("createEventBtn");
+const formContainer = document.getElementById("eventFormContainer");
 
 logoutBtn.addEventListener("click", () => {
     clearToken();
     window.location.href = "/";
+});
+
+createBtn.addEventListener("click", () => {
+    formContainer.classList.remove("hidden");
+});
+
+const form = document.getElementById("eventForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("planora_token");
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+        const res = await fetch("/api/events", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(data.message || "Error creating event");
+            return;
+        }
+
+        form.reset();
+        formContainer.classList.add("hidden");
+
+        loadEvents();
+
+    } catch (err) {
+        alert("Network error");
+    }
 });
 
 async function loadUser() {
@@ -54,12 +96,12 @@ async function loadEvents() {
 }
 
 async function init() {
-  const user = await requireAuth();
-  if (!user) return;
+    const user = await requireAuth();
+    if (!user) return;
 
-  userDataEl.textContent = JSON.stringify(user, null, 2);
+    userDataEl.textContent = JSON.stringify(user, null, 2);
 
-  loadEvents();
+    loadEvents();
 }
 
 init();
