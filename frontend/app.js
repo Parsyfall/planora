@@ -1,3 +1,7 @@
+import { redirectIfAuthenticated, setToken } from "./auth.js";
+
+redirectIfAuthenticated();
+
 const state = {
   mode: 'login',
   apiBaseUrl: `${window.location.origin}/api`
@@ -90,12 +94,11 @@ async function submitAuth(event) {
     }
 
     if (data.token) {
-      localStorage.setItem('planora_token', data.token);
+      setToken(data.token);
+      setTimeout(() => window.location.href = "/dashboard.html", 2000)
     }
 
     setStatus(state.mode === 'signup' ? 'Cont creat cu succes.' : 'Autentificare reușită.', 'success');
-
-    setTimeout(() => window.location.href = "/dashboard.html", 1500)
   } catch (error) {
     elements.result.textContent = JSON.stringify({ error: error.message }, null, 2);
     setStatus('Backend-ul nu răspunde sau CORS nu permite cererea.', 'error');

@@ -1,3 +1,5 @@
+import { requireAuth, clearToken } from "./auth.js";
+
 const API = `${window.location.origin}/api`;
 const token = localStorage.getItem("planora_token");
 
@@ -15,7 +17,7 @@ const eventsListEl = document.getElementById("eventsList");
 const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("planora_token");
+    clearToken();
     window.location.href = "/";
 });
 
@@ -51,5 +53,13 @@ async function loadEvents() {
     }
 }
 
-loadUser();
-loadEvents();
+async function init() {
+  const user = await requireAuth();
+  if (!user) return;
+
+  userDataEl.textContent = JSON.stringify(user, null, 2);
+
+  loadEvents();
+}
+
+init();
