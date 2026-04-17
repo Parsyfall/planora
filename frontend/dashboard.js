@@ -90,6 +90,42 @@ async function loadEvents() {
             li.innerHTML = renderEvent(event)
             eventsListEl.appendChild(li);
         });
+
+        eventsListEl.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+                const id = e.target.dataset.id;
+                await deleteEvent(id);
+            });
+        });
+
+        document.querySelectorAll(".invite-btn").forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+                const eventId = e.target.dataset.id;
+                const email = prompt("Enter guest email:");
+
+                if (!email) return;
+
+                const token = localStorage.getItem("planora_token");
+
+                const res = await fetch("/api/invitations", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ eventId, email })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Failed to send invite");
+                    return;
+                }
+
+                alert("Invitation sent!");
+            });
+        });
     } catch (err) {
         eventsListEl.innerHTML = "<li>Error loading events</li>";
     }
@@ -102,9 +138,43 @@ function renderEvent(event) {
         <p>${event.description || ""}</p>
         <p>${event.location || ""}</p>
         <p>${event.event_date} ${event.event_time}</p>
+        <button class="invite-btn" data-id="${event.id}">
+            Invita oaspeti
+        </button>
+        <button class="delete-btn" data-id="${event.id}">
+            Sterge
+        </button>
         </div>
     `;
 }
+
+async function deleteEvent(id) {
+    const token = localStorage.getItem("planora_token");
+
+    if (!confirm("Delete this event?")) return;
+
+    try {
+        const res = await fetch(`/api/events/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            alert(data.message || "Failed to delete");
+            return;
+        }
+
+        // refresh list
+        loadEvents();
+
+    } catch (err) {
+        alert("Network error");
+    }
+}
+
 
 
 async function init() {
